@@ -1,0 +1,81 @@
+# ============================================================
+# OpenC910 项目 .gitignore
+# ============================================================
+
+# ========== VCS 编译产物 ==========
+smart_run/work/simv
+smart_run/work/simv.daidir/
+smart_run/work/simv.vdb/
+smart_run/work/csrc/
+smart_run/work/AN.DB/
+smart_run/work/*.log
+smart_run/work/*.vcs.log
+smart_run/work/*.irun.log
+smart_run/work/*.fsdb
+smart_run/work/*.vpd
+smart_run/work/*.vcd
+smart_run/work/*.key
+smart_run/work/*.rc
+smart_run/work/novas.fsdb
+smart_run/work/novas.conf
+smart_run/work/*.bak
+smart_run/work/*.o
+smart_run/work/*.a
+smart_run/work/ucli.key
+smart_run/work/vc_hdrs.h
+
+# ========== Verdi/FSDB 波形文件 ==========
+*.fsdb
+*.fsdb.hier
+novas.rc
+verdiLog/
+*.debussy
+
+# ========== 编译中间文件 ==========
+*.o
+*.a
+*.so
+*.d
+csrc/
+AN.DB/
+
+# ========== 仿真日志 ==========
+*.log
+*_seq.log
+comp.vcs.log
+run.vcs.log
+
+# ========== LLM 审查临时文件 ==========
+*.review.json
+*.v.bak
+
+# ========== Python 缓存 ==========
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+
+# ========== 测试构建产物 ==========
+smart_run/work/*.elf
+smart_run/work/*.hex
+smart_run/work/*.bin
+smart_run/work/*.pat
+smart_run/work/*.map
+smart_run/work/*.vvp
+
+# ========== Makefile 生成目录 ==========
+smart_run/work/obj_dir/
+
+# ========== 编辑器 ==========
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ========== OS 文件 ==========
+.DS_Store
+Thumbs.db
+Desktop.ini
