@@ -29,6 +29,11 @@ CASE_LIST := \
       ISA_BARRIER \
       plic_int \
       sleep \
+      iu \
+      vfpu \
+
+
+SEQ_LIST := iu vfpu
 
 
 ISA_AMO_build:
@@ -136,6 +141,20 @@ sleep_build:
 	@cd ./work && make -s clean && make -s all CPU_ARCH_FLAG_0=c910  ENDIAN_MODE=little-endian CASENAME=sleep FILE=sleep_test >& sleep_build.case.log 
 
 
+iu_build:
+	@cp ./tests/cases/c910/iu/* ./work
+	@find ./tests/lib/ -maxdepth 1 -type f -exec cp {} ./work/ \; 
+	@cd ./work && make -s clean && make -s all CPU_ARCH_FLAG_0=c910  ENDIAN_MODE=little-endian CASENAME=iu FILE=tb_ct_iu_alu >& iu_build.case.log
+
+
+vfpu_build:
+	@cp ./tests/cases/c910/vfpu/*.s ./work/$$(basename $(S_FILE) .v).s
+	@cp ./tests/cases/c910/vfpu/$$(basename $(S_FILE)) ./work
+	@find ./tests/lib/ -maxdepth 1 -type f -exec cp {} ./work/ \; 
+	@cd ./work && make -s clean && make -s all CPU_ARCH_FLAG_0=c910  ENDIAN_MODE=little-endian CASENAME=vfpu FILE=$$(basename $(S_FILE) .v) >& vfpu_build.case.log
+	@echo "end $$(basename $(S_FILE) .v)"
+
+
 # Adjust verilog filelist for *.v case...
 ifeq ($(CASE), debug_gpr)
 SIM_FILELIST := ../tests/cases/debug/debug_gpr/had_drv.vh ../tests/cases/debug/debug_gpr/debug_read_write_gpr.v
@@ -149,11 +168,18 @@ endif
 ifeq ($(CASE), sleep)
 SIM_FILELIST := ../tests/cases/sleep/sleep_test.vh
 endif
-
+ifeq ($(CASE), iu)
+SIM_FILELIST := ../tests/cases/c910/iu/tb_ct_iu_alu.v
+endif
+ifeq ($(CASE), vfpu)
+SIM_DIR := ../tests/cases/c910/vfpu/
+SEARCH_DIR := ./tests/cases/c910/vfpu/
+SIM_FILELIST := $(addprefix $(SIM_DIR)/, $(notdir $(wildcard $(SEARCH_DIR)/*.v)))
+$(info SIM_FILELIST = $(SIM_FILELIST))
+endif
 
 define newline
 
 
 endef
-
 
